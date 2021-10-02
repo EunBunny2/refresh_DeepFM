@@ -46,3 +46,17 @@ class DeepFM(tf.keras.Model):
         y_pred = tf.reshape(y_pred, [-1, ])
 
         return y_pred
+
+    def get_config(self):
+        return {"fm_layer": self.fm_layer,
+                       "layers1": self.layers1,
+                       "dropout1": self.dropout1,
+                       "layers2": self.layers2,
+                       "dropout2": self.dropout2,
+                       "layers3": self.layers3,
+                       "final": self.final}
+
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
+

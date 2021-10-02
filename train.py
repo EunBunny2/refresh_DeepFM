@@ -9,6 +9,8 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.metrics import BinaryAccuracy, AUC
 
+import json
+
 
 def get_data():
     file = pd.read_csv('input.csv', header=None, encoding='utf-8-sig')
@@ -84,8 +86,10 @@ def train(epochs):
     print("Batch Size: {}, Embedding Size: {}".format(config.BATCH_SIZE, config.EMBEDDING_SIZE))
     print("걸린 시간: {:.3f}".format(perf_counter() - start))
     # model.save_weights('weights/weights-epoch({})-batch({})-embedding({}).h5'.format(epochs, config.BATCH_SIZE, config.EMBEDDING_SIZE))
-    model.save('weights/save_model-weights-epoch({})-batch({})-embedding({})'.format(epochs, config.BATCH_SIZE, config.EMBEDDING_SIZE))
 
+    model.save('pb_test.pb')
+    conf = model.get_config()
+    print(conf)
 
 if __name__ == '__main__':
     train(epochs=1)

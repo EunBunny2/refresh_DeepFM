@@ -42,3 +42,15 @@ class FM_layer(Layer):
         y_fm = tf.concat([linear_terms, interactions], 1)
 
         return y_fm, new_inputs
+
+    # ?????????????? https://www.tensorflow.org/guide/keras/save_and_serialize?hl=ko
+    # https://www.tensorflow.org/tutorials/keras/save_and_load?hl=ko
+    # https://www.tensorflow.org/guide/keras/custom_layers_and_models?hl=ko
+    def get_config(self):
+        config = super(FM_layer, self).get_config()
+        config.update({"w": self.w.numpy(), "V": self.V.numpy()})
+        return config
+
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
